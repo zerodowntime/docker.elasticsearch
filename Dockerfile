@@ -1,6 +1,6 @@
 ## Global build args
 
-ARG ES_VERSION="6.3.2"
+ARG ES_VERSION=""
 ARG ES_PLUGINS=""
 
 

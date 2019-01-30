@@ -14,6 +14,6 @@ for ES_PLUGINS in "${ES_PLUGINS_TAGS[@]}"; do
     ARG_TAG="${ES_PLUGINS// /-}"
   fi
   FULL_IMAGE_NAME="${DOCKER_REPO?}:${DOCKER_TAG?}-${ARG_TAG?}"
-  echo docker build --build-arg ES_PLUGINS="${ES_PLUGINS}" -f "${DOCKERFILE_PATH}" -t "${FULL_IMAGE_NAME}" ".${BUILD_PATH}"
-  echo docker push "${FULL_IMAGE_NAME}"
+  docker build --build-arg ES_PLUGINS="${ES_PLUGINS}" -f "${DOCKERFILE_PATH}" -t "${FULL_IMAGE_NAME}" ".${BUILD_PATH}"
+  docker push "${FULL_IMAGE_NAME}"
 done

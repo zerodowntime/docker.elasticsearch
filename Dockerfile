@@ -15,6 +15,7 @@ ENV NODE_DATA true
 ENV NODE_MASTER true
 ENV NODE_INGEST true
 ENV DISCOVERY_GROUP "127.0.0.1"
+ENV MASTER_GROUP "127.0.0.1"
 
 COPY elasticsearch.yml    /usr/share/elasticsearch/config/elasticsearch.yml
 COPY log4j2.properties    /usr/share/elasticsearch/config/log4j2.properties

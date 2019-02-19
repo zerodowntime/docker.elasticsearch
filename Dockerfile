@@ -16,4 +16,7 @@ ENV NODE_MASTER true
 ENV NODE_INGEST true
 ENV DISCOVERY_GROUP "127.0.0.1"
 
-COPY elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.yml
+COPY elasticsearch.yml    /usr/share/elasticsearch/config/elasticsearch.yml
+COPY log4j2.properties    /usr/share/elasticsearch/config/log4j2.properties
+COPY pre-stop-hook.sh     /pre-stop-hook.sh
+COPY post-start-hook.sh   /post-start-hook.sh

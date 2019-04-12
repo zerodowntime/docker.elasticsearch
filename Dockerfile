@@ -1,23 +1,37 @@
-## Global build args
+##
+## author: Piotr Stawarski <piotr.stawarski@zerodowntime.pl>
+##
 
-ARG ES_VERSION="latest"
-ARG ES_PLUGINS=""
+FROM zerodowntime/centos:7.6.1810
 
+RUN curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/local/bin/jq \
+    && chmod +x /usr/local/bin/jq
 
-FROM docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
-ARG ES_VERSION
-ARG ES_PLUGINS
+ARG ELASTICSEARCH_VERSION
 
-RUN echo $ES_PLUGINS | xargs -n1 -r elasticsearch-plugin install --batch
+RUN yum -y install \
+      java-1.8.0 \
+      https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.rpm \
+    && yum clean all \
+    && rm -rf /var/cache/yum /var/tmp/* /tmp/*
 
-ENV CLUSTER_NAME "elasticsearch-cluster"
-ENV NODE_DATA true
-ENV NODE_MASTER true
-ENV NODE_INGEST true
-ENV DISCOVERY_GROUP "127.0.0.1"
-ENV MASTER_GROUP "127.0.0.1"
+ARG ELASTICSEARCH_PLUGINS
 
-COPY elasticsearch.yml    /usr/share/elasticsearch/config/elasticsearch.yml
-COPY log4j2.properties    /usr/share/elasticsearch/config/log4j2.properties
-COPY pre-stop-hook.sh     /pre-stop-hook.sh
-COPY post-start-hook.sh   /post-start-hook.sh
+RUN echo $ELASTICSEARCH_PLUGINS | xargs -rtn1 /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch
+
+VOLUME /var/lib/elasticsearch
+VOLUME /var/log/elasticsearch
+
+# 9200: client
+# 9300: cluster
+EXPOSE 9200 9300
+
+COPY confd/ /etc/confd
+COPY docker-entrypoint.sh /
+
+COPY post-start.sh        /opt/
+COPY pre-stop.sh          /opt/
+COPY liveness-probe.sh    /opt/
+COPY readiness-probe.sh   /opt/
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

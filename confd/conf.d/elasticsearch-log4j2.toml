@@ -1,0 +1,6 @@
+[template]
+src = "log4j2.properties"
+dest = "/etc/elasticsearch/log4j2.properties"
+keys = [
+  "/elasticsearch",
+]

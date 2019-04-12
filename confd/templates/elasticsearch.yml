@@ -1,0 +1,30 @@
+---
+
+cluster:
+  name: {{ getv "/elasticsearch/cluster_name" (getv "/elasticsearch/cluster/name" "elasticsearch") }}
+
+node:
+  name: {{ getv "/elasticsearch/node_name" (getv "/elasticsearch/node/name" (getenv "HOSTNAME")) }}
+  data: {{ getv "/elasticsearch/node_data" (getv "/elasticsearch/node/data" "true") }}
+  master: {{ getv "/elasticsearch/node_master" (getv "/elasticsearch/node/master" "true") }}
+  ingest: {{ getv "/elasticsearch/node_ingest" (getv "/elasticsearch/node/ingest" "true") }}
+
+network.host: 0.0.0.0
+
+# see https://github.com/kubernetes/kubernetes/issues/3595
+bootstrap.memory_lock: ${ELASTICSEARCH_BOOTSTRAP_MEMORY_LOCK:false}
+
+discovery.zen:
+  ping.unicast.hosts: "{{ getv "/elasticsearch/discovery_hosts" (getv "/elasticsearch/discovery/hosts" "") }}"
+  minimum_master_nodes: "{{ getv "/elasticsearch/minimum_master_nodes" (getv "/elasticsearch/minimum/master/nodes" "1") }}"
+
+# see https://github.com/elastic/elasticsearch-definitive-guide/pull/679
+processors: ${ELASTICSEARCH_PROCESSORS:}
+
+# avoid split-brain w/ a minimum consensus of two masters plus a data node
+gateway:
+  expected_master_nodes: ${ELASTICSEARCH_EXPECTED_MASTER_NODES:1}
+  expected_data_nodes: ${ELASTICSEARCH_EXPECTED_DATA_NODES:1}
+  recover_after_time: ${ELASTICSEARCH_RECOVER_AFTER_TIME:5m}
+  recover_after_master_nodes: ${ELASTICSEARCH_RECOVER_AFTER_MASTER_NODES:1}
+  recover_after_data_nodes: ${ELASTICSEARCH_RECOVER_AFTER_DATA_NODES:1}

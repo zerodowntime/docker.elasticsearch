@@ -1,0 +1,6 @@
+[template]
+src = "jvm.options"
+dest = "/etc/elasticsearch/jvm.options"
+keys = [
+  "/elasticsearch",
+]

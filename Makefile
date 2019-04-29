@@ -25,6 +25,9 @@ clean:
 runit: build
 	docker run -it --rm "${IMAGE_NAME}:${IMAGE_TAG}"
 
+inspect: build
+	docker image inspect "${IMAGE_NAME}:${IMAGE_TAG}"
+
 ## Here be dragons.
 
 push-all:

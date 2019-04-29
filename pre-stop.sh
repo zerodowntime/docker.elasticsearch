@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 if [ -z ${HOSTNAME+x} ]; then
   HOSTNAME=$(hostname -s)

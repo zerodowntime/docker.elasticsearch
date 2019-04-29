@@ -29,7 +29,7 @@ runit: build
 
 push-all:
 push-all:
-	$(foreach VER,$(VERSIONS), $(MAKE) push-ver ELASTICSEARCH_VERSION=$(VER);)
+	echo $(foreach VER, $(VERSIONS), $(MAKE) push-ver ELASTICSEARCH_VERSION=$(VER);)
 
 push-ver:
 	$(MAKE) push # vanilla

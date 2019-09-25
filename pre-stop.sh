@@ -20,6 +20,9 @@ curl -s -XPUT -H 'Content-Type: application/json' 'localhost:9200/_cluster/setti
 
 while [ 1 ]; do
   allocation=$(curl -s -GET 'http://localhost:9200/_cat/allocation?format=json' | jq -r --arg this "$ELASTICSEARCH_NODE_NAME" '.[] | select(.node == $this).shards')
+  if [ -z "$allocation" ]; then
+    break;
+  fi
   if [ "$allocation" -eq "0" ]; then
     break;
   fi

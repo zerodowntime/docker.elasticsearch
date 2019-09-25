@@ -32,7 +32,7 @@ inspect: build
 
 push-all:
 push-all:
-	echo $(foreach VER, $(VERSIONS), $(MAKE) push-ver ELASTICSEARCH_VERSION=$(VER);)
+	$(foreach VER, $(VERSIONS), $(MAKE) push-ver ELASTICSEARCH_VERSION=$(VER);)
 
 push-ver:
 	$(MAKE) push # vanilla

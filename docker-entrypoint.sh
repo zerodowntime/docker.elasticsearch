@@ -23,6 +23,8 @@ confd -onetime -log-level debug || exit 2
 ## run elasticsearch
 
 export ES_HOME=/usr/share/elasticsearch
+export ES_PATH_CONF=/etc/elasticsearch
+
 export CONF_DIR=/etc/elasticsearch
 export DATA_DIR=/var/lib/elasticsearch
 export LOG_DIR=/var/log/elasticsearch
@@ -33,7 +35,4 @@ chown -vR elasticsearch:elasticsearch "$DATA_DIR" "$LOG_DIR"
 
 exec su-exec elasticsearch /usr/share/elasticsearch/bin/elasticsearch \
   -p ${PID_DIR}/elasticsearch.pid \
-  --verbose \
-  -Edefault.path.logs=${LOG_DIR} \
-  -Edefault.path.data=${DATA_DIR} \
-  -Edefault.path.conf=${CONF_DIR}
+  --verbose

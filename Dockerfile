@@ -19,6 +19,9 @@ ARG ELASTICSEARCH_PLUGINS
 
 RUN echo $ELASTICSEARCH_PLUGINS | xargs -rtn1 /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch
 
+# QF for 5.x
+RUN ln -s /etc/elasticsearch /usr/share/elasticsearch/config
+
 VOLUME /var/lib/elasticsearch
 VOLUME /var/log/elasticsearch
 

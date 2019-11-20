@@ -9,6 +9,9 @@ node:
   master: {{ getv "/elasticsearch/node_master" (getv "/elasticsearch/node/master" "true") }}
   ingest: {{ getv "/elasticsearch/node_ingest" (getv "/elasticsearch/node/ingest" "true") }}
 
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
 network.host: 0.0.0.0
 
 # see https://github.com/kubernetes/kubernetes/issues/3595

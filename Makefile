@@ -2,7 +2,7 @@
 ## author: Piotr Stawarski <piotr.stawarski@zerodowntime.pl>
 ##
 
-VERSIONS = 5.5.3 5.6.14 6.8.2
+VERSIONS = 5.5.3 5.6.14 6.8.2 6.8.9
 
 ELASTICSEARCH_VERSION ?= $(lastword $(VERSIONS))
 ELASTICSEARCH_PLUGINS ?=

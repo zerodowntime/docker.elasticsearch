@@ -2,7 +2,10 @@
 ## author: Piotr Stawarski <piotr.stawarski@zerodowntime.pl>
 ##
 
-VERSIONS = 5.5.3 5.6.14 6.8.2 6.8.9
+VERSIONS += 5.5.3
+VERSIONS += 5.6.14
+VERSIONS += 6.8.2
+VERSIONS += 6.8.9
 
 ELASTICSEARCH_VERSION ?= $(lastword $(VERSIONS))
 ELASTICSEARCH_PLUGINS ?=
@@ -23,7 +26,7 @@ clean:
 	docker image rm "${IMAGE_NAME}:${IMAGE_TAG}"
 
 runit: build
-	docker run -it --rm "${IMAGE_NAME}:${IMAGE_TAG}"
+	docker run -it --rm --name elasticsearch1 "${IMAGE_NAME}:${IMAGE_TAG}"
 
 inspect: build
 	docker image inspect "${IMAGE_NAME}:${IMAGE_TAG}"

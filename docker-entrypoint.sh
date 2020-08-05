@@ -26,6 +26,13 @@ if [ ! -f /etc/elasticsearch/elasticsearch.keystore ]; then
   /usr/share/elasticsearch/bin/elasticsearch-keystore create --verbose
 fi
 
+for f in /run/secrets/elasticsearch-keystore/*; do
+  [ -f "$f" ] || continue
+  name=$(basename $f)
+  echo "Setting '$name' in the keystore.."
+  /usr/share/elasticsearch/bin/elasticsearch-keystore add --verbose --force "$name" < "$f"
+done
+
 export ES_HOME=/usr/share/elasticsearch
 export ES_PATH_CONF=/etc/elasticsearch
 

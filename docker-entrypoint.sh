@@ -22,6 +22,10 @@ confd -onetime -log-level debug || exit 2
 
 ## run elasticsearch
 
+if [ ! -f /etc/elasticsearch/elasticsearch.keystore ]; then
+  /usr/share/elasticsearch/bin/elasticsearch-keystore create --verbose
+fi
+
 export ES_HOME=/usr/share/elasticsearch
 export ES_PATH_CONF=/etc/elasticsearch
 

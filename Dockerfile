@@ -12,6 +12,8 @@ ARG ELASTICSEARCH_VERSION
 RUN yum -y install \
       java-1.8.0 \
       https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.rpm \
+    && rm -vf /etc/elasticsearch/.*elasticsearch.keystore* \
+    && rm -vf /etc/elasticsearch/*elasticsearch.keystore* \
     && yum clean all \
     && rm -rf /var/cache/yum /var/tmp/* /tmp/*
 
